@@ -8,7 +8,7 @@ import frc.robot.util.LoggedTalon.Follower.PhoenixTalonFollower;
 import frc.robot.util.LoggedTalon.TalonInputs;
 
 public class TalonFXFlywheelSim extends BaseTalonFXSim {
-    private final FlywheelSim motorSim;
+    protected final FlywheelSim motorSim;
 
     /**
      * A simple flywheel sim representing a {@link LoggedTalonFX}
