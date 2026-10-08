@@ -28,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.*;
+import frc.robot.subsystems.simpleArm.SimpleArm;
+import frc.robot.subsystems.simpleArm.SimpleArmSim;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -44,6 +46,7 @@ public class RobotContainer {
 
     // Default Can Bus
     private final CANBus defaultCANBus = new CANBus("rio");
+    private final SimpleArm arm = new SimpleArm(new SimpleArmSim(1, defaultCANBus, "SimpleArm"));
 
     // Controller
     private final CommandXboxController controller = new CommandXboxController(0);
@@ -126,6 +129,10 @@ public class RobotContainer {
                 ? () -> drive.resetOdometry(driveSimulation.getSimulatedDriveTrainPose())
                 : () -> drive.resetOdometry(new Pose2d(drive.getPose().getTranslation(), new Rotation2d()));
         controller.start().onTrue(Commands.runOnce(resetOdometry).ignoringDisable(true));
+
+        arm.setDefaultCommand(arm.spinCommand());
+
+        // controller.a().whileTrue(arm.spinCommand());
     }
 
     /**
