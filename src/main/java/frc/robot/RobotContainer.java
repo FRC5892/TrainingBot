@@ -29,6 +29,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.simpleArm.SimpleArm;
+import frc.robot.subsystems.simpleArm.SimpleArmLimitSwitch;
 import frc.robot.subsystems.simpleArm.SimpleArmSim;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -46,7 +47,8 @@ public class RobotContainer {
 
     // Default Can Bus
     private final CANBus defaultCANBus = new CANBus("rio");
-    private final SimpleArm arm = new SimpleArm(new SimpleArmSim(1, defaultCANBus, "SimpleArm"));
+    private final SimpleArmSim armSim = new SimpleArmSim(1, defaultCANBus, "SimpleArm");
+    private final SimpleArm arm = new SimpleArm(armSim, new SimpleArmLimitSwitch("ArmLimit", armSim));
 
     // Controller
     private final CommandXboxController controller = new CommandXboxController(0);
@@ -130,9 +132,9 @@ public class RobotContainer {
                 : () -> drive.resetOdometry(new Pose2d(drive.getPose().getTranslation(), new Rotation2d()));
         controller.start().onTrue(Commands.runOnce(resetOdometry).ignoringDisable(true));
 
-        arm.setDefaultCommand(arm.spinCommand());
+        // arm.setDefaultCommand(arm.spinCommand());
 
-        // controller.a().whileTrue(arm.spinCommand());
+        controller.a().whileTrue(arm.spinCommand());
     }
 
     /**

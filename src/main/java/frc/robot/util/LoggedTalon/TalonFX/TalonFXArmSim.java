@@ -3,6 +3,7 @@ package frc.robot.util.LoggedTalon.TalonFX;
 import com.ctre.phoenix6.CANBus;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.util.LoggedTalon.Follower.PhoenixTalonFollower;
 import frc.robot.util.LoggedTalon.TalonInputs;
@@ -44,13 +45,14 @@ public class TalonFXArmSim extends BaseTalonFXSim {
                 Math.PI / 4,
                 -Math.PI,
                 false,
-                0);
+                -Math.PI);
     }
 
     @Override
     protected void simulationPeriodic(TalonInputs inputs) {
-        motorSim.setInputVoltage(motorSimState.getMotorVoltage());
+        var voltage = motorSimState.getMotorVoltage();
+        motorSim.setInputVoltage(voltage);
         motorSim.update(0.02);
-        motorSimState.setRawRotorPosition(motorSim.getAngleRads());
+        motorSimState.setRawRotorPosition(Units.radiansToRotations(motorSim.getAngleRads()));
     }
 }

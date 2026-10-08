@@ -4,14 +4,19 @@
 
 package frc.robot.subsystems.simpleArm;
 
-import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Radians;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.util.Units;
 import frc.robot.util.LoggedDIO.SimDIO;
 
 /** Add your docs here. */
 public class SimpleArmLimitSwitch extends SimDIO {
 
     public SimpleArmLimitSwitch(String name, SimpleArmSim armSim) {
-        super(name, () -> armSim.getPosition().in(Degrees) >= 90);
+        super(name, () -> {
+            final var angle = MathUtil.angleModulus(armSim.getPosition().in(Radians));
+            return (angle >= Units.degreesToRadians(44)) && (angle <= Units.degreesToRadians(50));
+        });
     }
 }
