@@ -1,0 +1,78 @@
+{
+  "Docking": {
+    "Data": []
+  },
+  "MainWindow": {
+    "GLOBAL": {
+      "font": "Proggy Dotted",
+      "fps": "120",
+      "height": "712",
+      "maximized": "1",
+      "style": "0",
+      "userScale": "2",
+      "width": "1440",
+      "xpos": "0",
+      "ypos": "25"
+    }
+  },
+  "Table": {
+    "0xE56EC1C2,4": {
+      "Column 0  Weight": "1.0000",
+      "Column 1  Weight": "1.0000",
+      "Column 2  Weight": "1.0000",
+      "Column 3  Weight": "1.0000"
+    }
+  },
+  "Window": {
+    "###/AdvantageKit/RealOutputs/SimpleMotor/mech": {
+      "Collapsed": "0",
+      "Pos": "19,252",
+      "Size": "328,213"
+    },
+    "###FMS": {
+      "Collapsed": "0",
+      "Pos": "121,475",
+      "Size": "283,140"
+    },
+    "###Joysticks": {
+      "Collapsed": "0",
+      "Pos": "228,27",
+      "Size": "796,155"
+    },
+    "###NetworkTables": {
+      "Collapsed": "0",
+      "Pos": "417,204",
+      "Size": "617,406"
+    },
+    "###NetworkTables Info": {
+      "Collapsed": "0",
+      "Pos": "1180,468",
+      "Size": "160,145"
+    },
+    "###Other Devices": {
+      "Collapsed": "0",
+      "Pos": "1047,20",
+      "Size": "250,695"
+    },
+    "###System Joysticks": {
+      "Collapsed": "0",
+      "Pos": "23,25",
+      "Size": "192,218"
+    },
+    "###Timing": {
+      "Collapsed": "0",
+      "Pos": "182,212",
+      "Size": "141,150"
+    },
+    "Debug##Default": {
+      "Collapsed": "0",
+      "Pos": "60,60",
+      "Size": "400,400"
+    },
+    "Robot State": {
+      "Collapsed": "0",
+      "Pos": "17,476",
+      "Size": "99,116"
+    }
+  }
+}

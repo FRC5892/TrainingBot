@@ -1,0 +1,64 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "Talon FX (v6)[1]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (v6)[1]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/AdvantageKit/RealOutputs/Alerts": "Alerts",
+      "/AdvantageKit/RealOutputs/PathPlanner": "Alerts",
+      "/AdvantageKit/RealOutputs/SimpleMotor/mech": "Mechanism2d",
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Auto Choices": "String Chooser",
+      "/SmartDashboard/PathPlanner": "Alerts"
+    },
+    "windows": {
+      "/AdvantageKit/RealOutputs/SimpleMotor/mech": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "AdvantageKit": {
+        "Motors": {
+          "SimpleArm": {
+            "double[]##v_/AdvantageKit/Motors/SimpleArm/SupplyCurrentAmps": {
+              "open": true
+            },
+            "double[]##v_/AdvantageKit/Motors/SimpleArm/TorqueCurrentAmps": {
+              "open": true
+            },
+            "open": true
+          },
+          "open": true
+        },
+        "SystemStats": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
