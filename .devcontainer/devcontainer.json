@@ -1,0 +1,9 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/java:17-trixie",
+    "features": { "desktop-lite": { "password": "FRC", "webPort": "6080"} },
+    "customizations": {
+      "vscode": {
+        "extensions": ["${containerWorkspaceFolder}/.devcontainer/vscode-wpilib-2026.2.1.vsix","vscjava.vscode-java-pack","vscjava.vscode-gradle"]
+      }
+    }
+}
