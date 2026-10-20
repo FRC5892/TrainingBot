@@ -28,6 +28,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.*;
+import frc.robot.subsystems.simpleArm.SimpleArm;
+import frc.robot.subsystems.simpleArm.SimpleArmSim;
+import frc.robot.util.LoggedTalon.TalonFX.NoOppTalonFX;
+import frc.robot.util.LoggedTalon.TalonFX.PhoenixTalonFX;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -41,6 +45,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
     // Subsystems
     private final Drive drive;
+    private final SimpleArm simpleArm;
 
     // Default Can Bus
     private final CANBus defaultCANBus = new CANBus("rio");
@@ -66,6 +71,7 @@ public class RobotContainer {
                         new ModuleIOTalonFX(TunerConstants.BackLeft),
                         new ModuleIOTalonFX(TunerConstants.BackRight),
                         (robotPose) -> {});
+                simpleArm = new SimpleArm(new PhoenixTalonFX(10, defaultCANBus, "SimpleArm"));
                 break;
 
             case SIM:
@@ -80,6 +86,7 @@ public class RobotContainer {
                         new ModuleIOSim(driveSimulation.getModules()[2]),
                         new ModuleIOSim(driveSimulation.getModules()[3]),
                         driveSimulation::setSimulationWorldPose);
+                simpleArm = new SimpleArm(new SimpleArmSim(10, defaultCANBus, "SimpleArm"));
                 break;
 
             default:
@@ -91,6 +98,7 @@ public class RobotContainer {
                         new ModuleIO() {},
                         new ModuleIO() {},
                         (robotPose) -> {});
+                simpleArm = new SimpleArm(new NoOppTalonFX("SimpleArm", 0));
                 break;
         }
 
@@ -126,6 +134,9 @@ public class RobotContainer {
                 ? () -> drive.resetOdometry(driveSimulation.getSimulatedDriveTrainPose())
                 : () -> drive.resetOdometry(new Pose2d(drive.getPose().getTranslation(), new Rotation2d()));
         controller.start().onTrue(Commands.runOnce(resetOdometry).ignoringDisable(true));
+
+        controller.a().whileTrue(simpleArm.spinAtSpeed(0.5));
+        controller.b().whileTrue(simpleArm.spinAtSpeed(-0.5));
     }
 
     /**
