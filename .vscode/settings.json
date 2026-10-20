@@ -69,5 +69,6 @@
   "[java]": {
     "editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"
   },
-  "chat.disableAIFeatures": true
+  "chat.disableAIFeatures": true,
+  "java.debug.settings.onBuildFailureProceed": true
 }
