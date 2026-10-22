@@ -22,14 +22,14 @@
     "types": {
       "/AdvantageKit/RealOutputs/Alerts": "Alerts",
       "/AdvantageKit/RealOutputs/PathPlanner": "Alerts",
-      "/AdvantageKit/RealOutputs/SimpleMotor/mech": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Intake/mech": "Mechanism2d",
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Auto Choices": "String Chooser",
       "/SmartDashboard/PathPlanner": "Alerts"
     },
     "windows": {
-      "/AdvantageKit/RealOutputs/SimpleMotor/mech": {
+      "/AdvantageKit/RealOutputs/Intake/mech": {
         "window": {
           "visible": true
         }

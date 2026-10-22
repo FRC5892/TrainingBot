@@ -27,7 +27,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.sim.IntakeDeploySim;
+import frc.robot.subsystems.Intake.sim.IntakeRollerSim;
 import frc.robot.subsystems.drive.*;
+import frc.robot.util.LoggedTalon.TalonFX.NoOppTalonFX;
+import frc.robot.util.LoggedTalon.TalonFX.PhoenixTalonFX;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -41,7 +46,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
     // Subsystems
     private final Drive drive;
-
+    private final Intake intake;
     // Default Can Bus
     private final CANBus defaultCANBus = new CANBus("rio");
 
@@ -66,6 +71,10 @@ public class RobotContainer {
                         new ModuleIOTalonFX(TunerConstants.BackLeft),
                         new ModuleIOTalonFX(TunerConstants.BackRight),
                         (robotPose) -> {});
+                intake = new Intake(
+                        new PhoenixTalonFX(0, defaultCANBus, "IntakeDeploy"),
+                        new PhoenixTalonFX(1, defaultCANBus, "IntakeRoller"));
+
                 break;
 
             case SIM:
@@ -80,6 +89,9 @@ public class RobotContainer {
                         new ModuleIOSim(driveSimulation.getModules()[2]),
                         new ModuleIOSim(driveSimulation.getModules()[3]),
                         driveSimulation::setSimulationWorldPose);
+                intake = new Intake(
+                        new IntakeDeploySim(0, defaultCANBus, "IntakeDeploy"),
+                        new IntakeRollerSim(1, defaultCANBus, "IntakeRoller"));
                 break;
 
             default:
@@ -91,6 +103,7 @@ public class RobotContainer {
                         new ModuleIO() {},
                         new ModuleIO() {},
                         (robotPose) -> {});
+                intake = new Intake(new NoOppTalonFX("IntakeDeploy", 0), new NoOppTalonFX("IntakeRoller", 0));
                 break;
         }
 
@@ -126,6 +139,9 @@ public class RobotContainer {
                 ? () -> drive.resetOdometry(driveSimulation.getSimulatedDriveTrainPose())
                 : () -> drive.resetOdometry(new Pose2d(drive.getPose().getTranslation(), new Rotation2d()));
         controller.start().onTrue(Commands.runOnce(resetOdometry).ignoringDisable(true));
+
+        controller.a().onTrue(intake.intakeSequence());
+        controller.b().onTrue(intake.retract());
     }
 
     /**
