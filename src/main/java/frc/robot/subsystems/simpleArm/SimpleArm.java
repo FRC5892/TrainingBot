@@ -16,11 +16,14 @@ public class SimpleArm extends SubsystemBase {
         motor.withConfig(LoggedTalonFX.buildStandardConfig(80, 40));
     }
 
-    public Command spinAtSpeed(double speed) {
-        return startEnd(() -> motor.setControl(out.withOutput(speed)), () -> motor.setControl(out.withOutput(0)))
+    public Command spinForward() {
+        return startEnd(() -> motor.setControl(out.withOutput(0.5)), () -> motor.setControl(out.withOutput(0)))
                 .until(() -> motor.getPosition().in(Rotations) >= 0.09);
     }
-
+    public Command spinBackward() {
+        return startEnd(() -> motor.setControl(out.withOutput(-0.5)), () -> motor.setControl(out.withOutput(0)))
+                .until(() -> motor.getPosition().in(Rotations) <= -0.9);
+    }
     @Override
     public void periodic() {
         motor.periodic();
