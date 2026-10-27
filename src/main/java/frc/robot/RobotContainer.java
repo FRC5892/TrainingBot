@@ -29,7 +29,10 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.*;
 import frc.robot.subsystems.simpleArm.SimpleArm;
+import frc.robot.subsystems.simpleArm.SimpleArmLimitSwitch;
 import frc.robot.subsystems.simpleArm.SimpleArmSim;
+import frc.robot.util.LoggedDIO.HardwareDIO;
+import frc.robot.util.LoggedDIO.NoOppDio;
 import frc.robot.util.LoggedTalon.TalonFX.NoOppTalonFX;
 import frc.robot.util.LoggedTalon.TalonFX.PhoenixTalonFX;
 import org.ironmaple.simulation.SimulatedArena;
@@ -71,7 +74,7 @@ public class RobotContainer {
                         new ModuleIOTalonFX(TunerConstants.BackLeft),
                         new ModuleIOTalonFX(TunerConstants.BackRight),
                         (robotPose) -> {});
-                simpleArm = new SimpleArm(new PhoenixTalonFX(10, defaultCANBus, "SimpleArm"));
+                simpleArm = new SimpleArm(new PhoenixTalonFX(10, defaultCANBus, "SimpleArm"),new HardwareDIO("ArmLimit", 0));
                 break;
 
             case SIM:
@@ -86,7 +89,9 @@ public class RobotContainer {
                         new ModuleIOSim(driveSimulation.getModules()[2]),
                         new ModuleIOSim(driveSimulation.getModules()[3]),
                         driveSimulation::setSimulationWorldPose);
-                simpleArm = new SimpleArm(new SimpleArmSim(10, defaultCANBus, "SimpleArm"));
+
+                SimpleArmSim armSim = new SimpleArmSim(10, defaultCANBus, "SimpleArm");
+                simpleArm = new SimpleArm(armSim,new SimpleArmLimitSwitch("ArmLimit", armSim));
                 break;
 
             default:
@@ -98,7 +103,7 @@ public class RobotContainer {
                         new ModuleIO() {},
                         new ModuleIO() {},
                         (robotPose) -> {});
-                simpleArm = new SimpleArm(new NoOppTalonFX("SimpleArm", 0));
+                simpleArm = new SimpleArm(new NoOppTalonFX("SimpleArm", 0),new NoOppDio("ArmLimit"));
                 break;
         }
 
@@ -135,8 +140,8 @@ public class RobotContainer {
                 : () -> drive.resetOdometry(new Pose2d(drive.getPose().getTranslation(), new Rotation2d()));
         controller.start().onTrue(Commands.runOnce(resetOdometry).ignoringDisable(true));
 
-        controller.a().whileTrue(simpleArm.spinAtSpeed(0.5));
-        controller.b().whileTrue(simpleArm.spinAtSpeed(-0.5));
+        controller.a().whileTrue(simpleArm.spinForward());
+        controller.b().whileTrue(simpleArm.spinBackward());
     }
 
     /**
