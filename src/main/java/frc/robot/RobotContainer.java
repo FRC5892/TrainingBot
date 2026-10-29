@@ -72,8 +72,8 @@ public class RobotContainer {
                         new ModuleIOTalonFX(TunerConstants.BackRight),
                         (robotPose) -> {});
                 intake = new Intake(
-                        new PhoenixTalonFX(0, defaultCANBus, "IntakeDeploy"),
-                        new PhoenixTalonFX(1, defaultCANBus, "IntakeRoller"));
+                        new PhoenixTalonFX(1, defaultCANBus, "IntakeDeploy"),
+                        new PhoenixTalonFX(2, defaultCANBus, "IntakeRoller"));
 
                 break;
 
@@ -142,6 +142,7 @@ public class RobotContainer {
 
         controller.a().onTrue(intake.intakeSequence());
         controller.b().onTrue(intake.retract());
+        controller.x().whileTrue(intake.joystickControl(controller::getRightY));
     }
 
     /**
