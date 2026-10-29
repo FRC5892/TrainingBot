@@ -69,6 +69,15 @@
   "[java]": {
     "editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"
   },
+  "java.import.gradle.java.home": "/usr/lib/jvm/msopenjdk-current",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-17",
+      "path": "/usr/lib/jvm/msopenjdk-current",
+      "default": true
+    }
+  ],
   "chat.disableAIFeatures": true,
-  "java.debug.settings.onBuildFailureProceed": true
+  "java.debug.settings.onBuildFailureProceed": true,
+  "extensions.supportNodeGlobalNavigator": true
 }
